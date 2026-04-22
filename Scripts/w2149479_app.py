@@ -15,12 +15,10 @@ st.markdown(f'This dashboard analyses **{len(df):,}** recorded disaster displace
 #adding a sidebar for filters 
 st.sidebar.header('Filters')
 #year selector
-#range selector
 years = st.sidebar.slider('Years', int(df['year'].min()),
                           int(df['year'].max()),
                           (int(df['year'].min()), int(df['year'].max())))
-#hazard selector
-#multi selector
+#hazard selector 
 hazards = df['hazard_type_name'].unique()
 hazard_list = st.sidebar.multiselect('Hazard Type', options=hazards, default=hazards)
 #applying the filters
