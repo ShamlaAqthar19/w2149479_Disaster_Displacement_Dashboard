@@ -57,12 +57,12 @@ no_of_hazard = filter_df.groupby('hazard_type_name')['new_displacement'].sum().r
 barfig = px.bar(no_of_hazard, x='new_displacement', y='hazard_type_name', orientation='h',color = 'hazard_type_name', text_auto='.2s')
 st.plotly_chart(barfig, use_container_width=True)
 #Top 10 affected countries
-st.subheader('Top 10 Countries with Highest Disaster Displacement')
+st.subheader('Top 10 Countries with Highest Disaster Displacements')
 top_10 = filter_df.groupby('country_name')['new_displacement'].sum().reset_index().nlargest(10,'new_displacement')
 topfig = px.bar(top_10, x='country_name', y='new_displacement', color ='new_displacement', color_continuous_scale='Oranges', text_auto='.2s')
 st.plotly_chart(topfig,use_container_width=True)
 #ploting a map 
-st.subheader('Global Distribution of Displacements')
+st.subheader('Global Distribution of Disaster Displacements')
 #grouping displacements by country
 country_map = filter_df.groupby('country_name')['new_displacement'].sum().reset_index()
 mapfig = px.choropleth(country_map,locations='country_name', locationmode='country names', color='new_displacement',hover_name='country_name',color_continuous_scale=px.colors.sequential.Oranges)
