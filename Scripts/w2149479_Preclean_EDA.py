@@ -1,6 +1,6 @@
 import pandas as pd
 #dataset loading
-df = pd.read_csv('/Users/shamlaaqthariit/Desktop/Desktop - Shamla’s MacBook Pro/IIT /w2149479_Disaster_Displacement_Dashboard/Raw Dataset/internal-displacements-new-displacements-associated-with-disasters.csv')
+df = pd.read_csv('Raw Dataset/internal-displacements-new-displacements-associated-with-disasters.csv')
 #Basic overview
 print('First five rows')
 print(df.head())
@@ -25,9 +25,9 @@ print(df['new_displacement'].describe())
 #checking if all years have displacement
 print('\nDisplacement by year')
 print(df.groupby('year')['new_displacement'].sum())
-#checking for displacments based on each hazrad cat
+#checking for displacements based on each hazrad cat
 print('\nDisplacement by hazard category')
 print(df.groupby('hazard_category_name')['new_displacement'].sum())
-#checking for displacments based on the event
+#checking for displacements based on the event
 print('\nDisplacement by hazard type')
 print(df.groupby('hazard_type_name')['new_displacement'].sum())
