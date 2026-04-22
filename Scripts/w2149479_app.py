@@ -9,26 +9,35 @@ st.set_page_config(page_title='Disaster Displacement Dashboard', layout='wide')
 def load_data():
     return pd.read_csv('../cleaned_data.csv')
 df = load_data()
-#dashboard heading and description
+#dashboard main heading and description
 st.title('Disaster Displacement Analysis')
 st.markdown(f'This dashboard analyses **{len(df):,}** recorded disaster displacement events globally')
 #adding a sidebar for filters 
 st.sidebar.header('Filters')
 #year selector
+#range selector
 years = st.sidebar.slider('Years', int(df['year'].min()),
                           int(df['year'].max()),
                           (int(df['year'].min()), int(df['year'].max())))
 #hazard selector
+#multi selector
 hazards = df['hazard_type_name'].unique()
 hazard_list = st.sidebar.multiselect('Hazard Type', options=hazards, default=hazards)
-#applying the filter
+#applying the filters
 filter_df = df[(df['year']>= years[0]) &
                (df['year']<= years[1])&
                (df['hazard_type_name'].isin(hazard_list))]
+ documenting_and_testing
+#visual 1
+#KPI chart to show the total number of displacments across the years
+sum_displacement = filter_df['new_displacement'].sum()
+#KPI chart to show the most contributing hazard type
+
 #Visual 1
 #KPI chart to show the total number of displacments across the years
 sum_displacement = filter_df['new_displacement'].sum()
 #KPI chart to show the most contribution hazard type
+ main
 hazard_top = filter_df.groupby('hazard_type_name')['new_displacement'].sum().idxmax()
 #KPI chart to show the most affected country
 top_country = filter_df.groupby('country_name')['new_displacement'].sum().idxmax()
@@ -46,6 +55,7 @@ st.subheader('Trend of Disaster Displacements Over Time')
 trend = filter_df.groupby('year')['new_displacement'].sum().reset_index()
 plotfig = px.line(trend, x='year',y='new_displacement',markers=True, color_discrete_sequence=['darkorange'])
 st.plotly_chart(plotfig,use_container_width=True)
+documenting_and_testing
 #Visual 3 - Line chart
 #line chart to show the hazard trend over the years
 st.subheader('Top 5 Hazard Trends Over Time')
