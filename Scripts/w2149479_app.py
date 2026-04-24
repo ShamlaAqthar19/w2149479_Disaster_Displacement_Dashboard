@@ -25,8 +25,7 @@ hazard_list = st.sidebar.multiselect('Hazard Type', options=hazards, default=haz
 filter_df = df[(df['year']>= years[0]) &
                (df['year']<= years[1])&
                (df['hazard_type_name'].isin(hazard_list))]
-#Visual 1
-#KPI chart to show the total number of displacments across the years
+#KPI chart to show the total number of displacements across the years
 sum_displacement = filter_df['new_displacement'].sum()
 #KPI chart to show the most contribution hazard type
 hazard_top = filter_df.groupby('hazard_type_name')['new_displacement'].sum().idxmax()
@@ -41,20 +40,20 @@ with col_3:
     st.metric('Most Affected Country', top_country)
 #adding a divider 
 st.divider()
-#Visual 2 - Line chart
+#Line chart
 #trend line to see how many displacements happened across the years
 st.subheader('Trend of Disaster Displacements Over Time')
 #grouping the displacements by year 
 trend = filter_df.groupby('year')['new_displacement'].sum().reset_index()
 plotfig = px.line(trend, x='year',y='new_displacement', labels={'year': 'Year', 'new_displacement': 'Number of People Displaced'}, markers=True, color_discrete_sequence=['darkorange'])
 st.plotly_chart(plotfig,use_container_width=True)
-#Visual 5 - Bar chart
+#Bar chart
 #Top 10 affected countries
 st.subheader('Top 10 Countries with Highest Disaster Displacements')
 top_10 = filter_df.groupby('country_name')['new_displacement'].sum().reset_index().nlargest(10,'new_displacement')
 topfig = px.bar(top_10, x='country_name', y='new_displacement', labels={'country_name': 'Country', 'new_displacement': 'Number of People Displaced'}, color ='new_displacement', color_continuous_scale='Oranges', text_auto='.2s')
 st.plotly_chart(topfig,use_container_width=True)
-#Visual 3 - Line chart
+#Line chart
 #line chart to show the hazard trend over the years
 st.subheader('Top 5 Hazard Trends Over Time')
 h_trend = filter_df.groupby('hazard_type_name')['new_displacement'].sum().nlargest(5).index
@@ -62,14 +61,14 @@ h_trend_filter = filter_df[filter_df['hazard_type_name'].isin(h_trend)]
 h_trend_f = h_trend_filter.groupby(['year', 'hazard_type_name'])['new_displacement'].sum().reset_index()
 hazardfig = px.line(h_trend_f, x='year', y='new_displacement', labels={'year': 'Year', 'new_displacement': 'Number of People Displaced'}, color = 'hazard_type_name',markers=True,color_discrete_sequence=px.colors.qualitative.Vivid)
 st.plotly_chart(hazardfig, use_container_width=True)
-#Visual 4 - Bar chart
-#bar chart to show the number of displacments by hazard types
+#Bar chart
+#bar chart to show the number of displacements by hazard types
 st.subheader('Displacements by Hazard Type')
 no_of_hazard = filter_df.groupby('hazard_type_name')['new_displacement'].sum().reset_index().sort_values('new_displacement', ascending=False)
 #kept in ascending order for easiness
 barfig = px.bar(no_of_hazard, x='new_displacement', y='hazard_type_name',labels={'new_displacement': 'Number of People Displaced', 'hazard_type_name': 'Hazard Type'} , orientation='h',color = 'hazard_type_name', text_auto='.2s')
 st.plotly_chart(barfig, use_container_width=True)
-#Visual 5 - Map
+#Map
 #ploting a map 
 st.subheader('Global Distribution of Disaster Displacements')
 #grouping displacements by country
