@@ -7,7 +7,7 @@ st.set_page_config(page_title='Disaster Displacement Dashboard', layout='wide')
 #loading the clean dataset
 @st.cache_data 
 def load_data():
-    return pd.read_csv('../cleaned_data.csv')
+    return pd.read_csv('cleaned_data.csv')
 df = load_data()
 #dashboard main heading and description
 st.title('Disaster Displacement Analysis')
