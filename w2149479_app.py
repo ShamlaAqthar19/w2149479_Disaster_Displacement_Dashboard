@@ -7,7 +7,7 @@ st.set_page_config(page_title='Disaster Displacement Dashboard', layout='wide')
 #loading the clean dataset
 @st.cache_data 
 def load_data():
-    return pd.read_csv('../cleaned_data.csv')
+    return pd.read_csv('cleaned_data.csv')
 df = load_data()
 #dashboard main heading and description
 st.title('Disaster Displacement Analysis')
@@ -74,7 +74,6 @@ else:
     barfig = px.bar(no_of_hazard, x='new_displacement', y='hazard_type_name',labels={'new_displacement': 'Number of Displacements', 'hazard_type_name':'Hazard Type'},orientation='h',color = 'hazard_type_name', text_auto='.2s')
     st.plotly_chart(barfig, use_container_width=True)
     #Map
-    #ploting a map 
     st.subheader('Global Distribution of Disaster Displacements')
     #grouping displacements by country
     country_map = filter_df.groupby('country_name')['new_displacement'].sum().reset_index()
